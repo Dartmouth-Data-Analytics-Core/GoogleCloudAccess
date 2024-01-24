@@ -53,10 +53,10 @@ Instructions for running the DAC bulk RNAseq data reduction pipeline on Google C
 
 # SURVEY QUESTIONS
 
-1. Please report any issues with setting up the virtual machine [here]().
-2. Please report any issues setting up the following tools [here](). 
+1. Please report any issues with setting up the virtual machine [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-forms/).
+2. Please report any issues setting up the following tools [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-forms/). 
   - Conda
   - Snakemake
   - Tools within the Snakemake pipeline
-3. Please report any issues formatting references [here]().
-4. Please report any issues that do not fit into the categories above [here]().
+3. Please report any issues formatting references [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-forms/).
+4. Please report any issues that do not fit into the categories above [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-forms/).
