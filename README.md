@@ -3,7 +3,13 @@ Instructions for running the DAC bulk RNAseq data reduction pipeline on Google C
 
 
 ## 1. Set up a Google Cloud account
-To access cloud resources you will need to create a google cloud account with an *email addres*s and a *credit card*. To create the account is free, but compute resources are pay as you go. Cloud accounts created with Dartmouth College affiliated email address i.e. Fred.Rogers@dartmouth.edu will be managed by [Research Computing](Research.Computing@dartmouth.edu). 
+To access cloud resources you will need to create a google cloud account with an *email addres*s and a *credit card*. 
+
+Creating the account is free, compute resources and data storage you pay for what you use. With a grant one way to set this up is to link a p-card or corporate card to the google account and use the string to pay the monthly usage fees on the p-card.
+
+Cloud accounts created with Dartmouth College affiliated email address (i.e. Fred.Rogers[]()@dartmouth.edu) will be managed by [Research Computing](Research.Computing@dartmouth.edu). To get permission to open a project or set up billing for a project you will need to request Billing Account Creator access from RC. Currently they prefer to adjust access levels on a per project basis, but it is not clear who would then have access to create a project.
+
+It might be that they would like us to use a project for each grant and there is a better way than using a p-card to link the grant string. 
 
 You can follow the instructions on the [Google Cloud home page](cloud.google.com/free) to create an account. 
 
