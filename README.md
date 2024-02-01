@@ -111,10 +111,10 @@ gcloud storage buckets remove-iam-policy-binding  gs://BUCKET_NAME
 
 # SURVEY QUESTIONS
 
-1. Please report any issues with setting up the virtual machine [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-forms/).
-2. Please report any issues setting up the following tools [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-forms/). 
+1. Please report any issues with setting up the virtual machine [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-form-VM/).
+2. Please report any issues setting up the following tools [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-tools/). 
   - Conda
   - Snakemake
   - Tools within the Snakemake pipeline
-3. Please report any issues formatting references [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-forms/).
-4. Please report any issues that do not fit into the categories above [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-forms/).
+3. Please report any issues formatting references [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-refs/).
+4. Please report any issues that do not fit into the categories above [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-general/).
