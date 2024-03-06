@@ -5,23 +5,25 @@ Instructions for running the DAC bulk RNAseq data reduction pipeline on Google C
 ## 1. Set up a Google Cloud account
 To access cloud resources you will need to create a google cloud account with an *email addres*s and a *credit card*. 
 
-Creating the account is free, compute resources and data storage you pay for what you use. With a grant one way to set this up is to link a p-card or corporate card to the google account and use the string to pay the monthly usage fees on the p-card.
+Creating the account is free, compute resources and data storage you pay for what you use. With a grant one way to set this up is to link a p-card or corporate card to the google account and use the string to pay the monthly usage fees on the p-card. However, if you have an NIH grant you can receive up to a 20% discount on GCP storage or data processing costs. 
 
-Cloud accounts created with Dartmouth College affiliated email address (i.e. Fred.Rogers[]()@dartmouth.edu) will be managed by [Research Computing](Research.Computing@dartmouth.edu). To get permission to open a project or set up billing for a project you will need to request Billing Account Creator access from RC. Currently they prefer to adjust access levels on a per project basis, but it is not clear who would then have access to create a project.
-
-It might be that they would like us to use a project for each grant and there is a better way than using a p-card to link the grant string. 
+Cloud accounts created with Dartmouth College affiliated email address (i.e. Fred.Rogers[]()@dartmouth.edu) will be managed by [Research Computing](Research.Computing@dartmouth.edu). You should be able to create a project and billing will automatically be managed by Burwood. You should reach out to research computing with the details of the grant that supports the work you're doing so that they can provide those details to Burwood. You're grant will be charged on a monthly basis based on the storage and compute resources used in the project linked to your grant. 
 
 You can follow the instructions on the [Google Cloud home page](cloud.google.com/free) to create an account. 
 
 ## 2. Set up Google Cloud project and link to a billing account
 
+Currently we do not have the ability to make a new project in GDSC, to make a project send the title of the project to research computing and they will set up the project for you, even better you can also send them the grant number to charge.
+
 ## 3. Build VM on Google cloud
-  - link to where a VM can be created?
-  - VM configurations?
-    - what OS do you specify?
-    - RAM?
-    - CPUs?
-   
+
+From the dashboard page (insert an image of this page) select the project that you would like to run the VM from in the drop down menu. 
+Next go to the menu on the top left of the page and select **Compute Engine** and then select **VM instance**.
+Click the blue button at the top of the page **Create instance**.
+Select the region that is closest to you for faster data transfer, this will be negligible as long as you select a region in the united states. Here I'm selecting *us-east1*.
+Next select the machine configuration that best meets the needs of your project, for the purposes of the RNAseq pipeline low cost day to day computing will be fine, so I will select *E2*. If you select a different configuration you can see how this would affect the projected monthly pricing on the right pane of the screen. 
+Next select the machine type, again because we are using relatively few compute resources for our pipeline I've selected e2-micro, you can see the price drops from ~$25 to only $7 per month with the micro machine. You can see the size of the machine mostly affects the memory available though you do get more CPUs with a e2-medium machine.
+
 ## 4. Configure VM to use snakemake workflow 
   **All of the following steps will be captured in a single BASH script Tim is building**
 ```
