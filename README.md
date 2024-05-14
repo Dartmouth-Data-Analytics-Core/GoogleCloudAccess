@@ -19,10 +19,22 @@ Currently we do not have the ability to make a new project in GDSC, to make a pr
 
 From the dashboard page (insert an image of this page) select the project that you would like to run the VM from in the drop down menu. 
 Next go to the menu on the top left of the page and select **Compute Engine** and then select **VM instance**.
-Click the blue button at the top of the page **Create instance**.
+
+
+![VM instance](figures/vmInstanceMenu.png)
+
+Once you select **VM instance** you will be directed to a new screen where you can see any instances you already have running. You can see in the screen shot below I have an instance running called *test-vm-240214*. To create a new VM instance click the blue button at the top right of the page **Create instance**.
+
+![create instance](figures/createInstance.png)
+
 Select the region that is closest to you for faster data transfer, this will be negligible as long as you select a region in the united states. Here I'm selecting *us-east1*.
 Next select the machine configuration that best meets the needs of your project, for the purposes of the RNAseq pipeline low cost day to day computing will be fine, so I will select *E2*. If you select a different configuration you can see how this would affect the projected monthly pricing on the right pane of the screen. 
+
+![region selection](figures/regionSelection.png)
+
 Next select the machine type, again because we are using relatively few compute resources for our pipeline I've selected e2-small, you can see the price drops from ~$25 to only $7 per month with the micro machine, for this pipeline you need a minimum of 2GB of memory. You can see the size of the machine mostly affects the memory available though you do get more CPUs with a e2-medium machine.
+
+![machine type](figures/e2micro.png)
 
 Below is the command you could use from the command line to create this VM instance, you can see the fields specified are the ones that you clicked on above.
 ```
