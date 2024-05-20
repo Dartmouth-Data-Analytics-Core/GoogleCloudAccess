@@ -1,5 +1,5 @@
 # GoogleCloudAccess
-Instructions for running the DAC bulk RNAseq data reduction pipeline on Google Cloud. 
+Instructions for creating a Dartmouth affiliated account on Google Cloud. 
 
 
 ## 1. Set up a Google Cloud account
@@ -15,45 +15,6 @@ You can follow the instructions on the [Google Cloud home page](cloud.google.com
 
 Currently we do not have the ability to make a new project in GDSC, to make a project send the title of the project to research computing and they will set up the project for you, even better you can also send them the grant number to charge.
 
-## 3. Build VM on Google cloud
-
-From the dashboard page (insert an image of this page) select the project that you would like to run the VM from in the drop down menu. 
-Next go to the menu on the top left of the page and select **Compute Engine** and then select **VM instance**.
-
-
-![VM instance](figures/vmInstanceMenu.png)
-
-Once you select **VM instance** you will be directed to a new screen where you can see any instances you already have running. You can see in the screen shot below I have an instance running called *test-vm-240214*. To create a new VM instance click the blue button at the top right of the page **Create instance**.
-
-![create instance](figures/createInstance.png)
-
-Select the region that is closest to you for faster data transfer, this will be negligible as long as you select a region in the united states. Here I'm selecting *us-east1*.
-Next select the machine configuration that best meets the needs of your project, for the purposes of the RNAseq pipeline low cost day to day computing will be fine, so I will select *E2*. If you select a different configuration you can see how this would affect the projected monthly pricing on the right pane of the screen. 
-
-![region selection](figures/regionSelection.png)
-
-Next select the machine type, again because we are using relatively few compute resources for our pipeline I've selected e2-small, you can see the price drops from ~$25 to only $7 per month with the micro machine, for this pipeline you need a minimum of 2GB of memory. You can see the size of the machine mostly affects the memory available though you do get more CPUs with a e2-medium machine.
-
-![machine type](figures/e2micro.png)
-
-Below is the command you could use from the command line to create this VM instance, you can see the fields specified are the ones that you clicked on above.
-```
-gcloud compute instances create instance-20240306-175157 \
-    --project=gdsc-project-2024 \
-    --zone=us-east1-b \
-    --machine-type=e2-small \
-    --network-interface=network-tier=PREMIUM,stack-type=IPV4_ONLY,subnet=default \
-    --maintenance-policy=MIGRATE \
-    --provisioning-model=STANDARD \
-    --service-account=31760115633-compute@developer.gserviceaccount.com \
-    --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append \
-    --create-disk=auto-delete=yes,boot=yes,device-name=instance-20240306-175157,image=projects/debian-cloud/global/images/debian-12-bookworm-v20240213,mode=rw,size=10,type=projects/gdsc-project-2024/zones/us-east1-b/diskTypes/pd-balanced \
-    --no-shielded-secure-boot \
-    --shielded-vtpm \
-    --shielded-integrity-monitoring \
-    --labels=goog-ec-src=vm_add-gcloud \
-    --reservation-affinity=any
-```
 
 ## 4. Configure VM to use snakemake workflow 
   **All of the following steps will be captured in a single BASH script Tim is building**
@@ -94,60 +55,4 @@ snakemake -s Snakefile  --use-conda -j 6  check_refs
 # run the pipeline on the VM using conda
 snakemake -s Snakefile  --use-conda -j 6`
 ```
-## 7. Create a google bucket to store results long term within your project. Any results not saved to this bucket will be lost when the VM is closed.
-
-```
-#create a Google Bucket -replace BUCKET_NAME with your preferred name
-gcloud storage buckets create gs://BUCKET_NAME 
-```
-
-```
-#create and configure a Google Bucket
-gcloud storage buckets create gs://BUCKET_NAME \
-  --project MY_PROJECT \
-  --billing-project MY_BILLING_ACCOUNT \ 
-  --default-storage-class STANDARD \ # could be "STANDARD" "NEARLINE" "COLDLINE" "ARCHIVE"
-  --location US-EAST1 \
-  --uniform-bucket-level-access \ # set IAM access for all files in the bucket to be the same
-  --public-access-prevention \ # protects bucket from being made public accidently
-  --retention-period=1Y1M1D5S \ # the bucket must be retained for this minimum period of time (1 year, 1month, 1day, and 5seconds)
-  --soft-delete-duration=2W1D \ # the period of time to recover deleted files (2weeks and 1day)
-  --enable-autoclass \ # enable autoclass to adjust storage tier based on the date of last access --no-enable-autoclass is also available
-```
-
-```
-# write the results to a google bucket for access later
-gcloud auth login
-gsutil rsync -r -x '\..*|./[.].*$'  . gs://BUCKET_NAME
-```
-
-## 8. Manage permissions of the bucket to share data with collaborators
-
-To set and manage permissions for a bucket you must have a Storage Admin role (roles/storage.admin). 
-
-[Here](https://cloud.google.com/iam/docs/principal-identifiers) is a link to various principal identifiers that can be used to specify access.
-[Here](https://cloud.google.com/storage/docs/access-control/iam-roles) is a link to various roles that control the level of access the user has to the data in the bucket.
-```
-# Check IAM permissions for a given bucket
-gcloud storage buckets get-iam-policy gs://BUCKET_NAME
-
-# Add IAM policy to a storage bucket for a new user
-gcloud storage buckets add-iam-policy-binding gs://BUCKET_NAME \
-  --member=PRINCIPAL_IDENTIFIER \ # ex. user:jane@gmail.com 
-  --role=IAM_ROLE  # ex. roles/storage.objectViewer 
-
-# Remove bucket access for a given user
-gcloud storage buckets remove-iam-policy-binding  gs://BUCKET_NAME 
---member=PRINCIPAL_IDENTIFIER \ # ex. user:jane@gmail.com 
---role=IAM_ROLE # ex. roles/storage.objectViewer
-```
-
-# SURVEY QUESTIONS
-
-1. Please report any issues with setting up the virtual machine [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-form-VM/).
-2. Please report any issues setting up the following tools [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-tools/). 
-  - Conda
-  - Snakemake
-  - Tools within the Snakemake pipeline
-3. Please report any issues formatting references [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-refs/).
-4. Please report any issues that do not fit into the categories above [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-general/).
+Please report any issues with creating an account [here](https://sites.dartmouth.edu/cqb/google-cloud-analyst-feedback-general/).
